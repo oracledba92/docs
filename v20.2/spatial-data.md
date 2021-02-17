@@ -41,25 +41,25 @@ In this example we will import a specific data set that is available as a [Shape
 
 If you have a shapefile, you will need to convert it to SQL using the [`shp2pgsql`](https://manpages.debian.org/stretch/postgis/shp2pgsql.1.en.html) tool, which is part of [the PostGIS install](https://postgis.net/install/).
 
-In this example, we will import the [US National Weather Service's Tornadoes (1950-2018) data set](https://www.spc.noaa.gov/gis/svrgis/) (specifically the [tornado start points data set](https://www.spc.noaa.gov/gis/svrgis/zipped/1950-2018-torn-initpoint.zip)).
+In this example, we will import the [US National Weather Service's Tornadoes (1950-2019) data set](https://www.spc.noaa.gov/gis/svrgis/) (specifically the [tornado start points data set](https://www.spc.noaa.gov/gis/svrgis/zipped/1950-2019-torn-initpoint.zip)).
 
 First, unzip the tornado data:
 
 {% include copy-clipboard.html %}
 ~~~ shell
-unzip 1950-2018-torn-initpoint.zip
+unzip 1950-2019-torn-initpoint.zip
 ~~~
 
 {% include copy-clipboard.html %}
 ~~~ shell
-cd 1950-2018-torn-initpoint/
+cd 1950-2019-torn-initpoint/
 ~~~
 
 Next, convert the Shapefile data to SQL using the following command:
 
 {% include copy-clipboard.html %}
 ~~~ shell
-shp2pgsql 1950-2018-torn-initpoint.shp > tornado-points.sql &
+shp2pgsql 1950-2019-torn-initpoint.shp > tornado-points.sql &
 ~~~
 
 #### Step 2. Create the tornadoes database
@@ -102,7 +102,7 @@ We can try to verify this number against the NWS's tornado data set with the fol
 
 {% include copy-clipboard.html %}
 ~~~ sql
-SELECT COUNT(*) FROM "1950-2018-torn-initpoint" WHERE yr = 1999 AND mo = 5 AND dy >= 02 AND dy <= 08;
+SELECT COUNT(*) FROM "1950-2019-torn-initpoint" WHERE yr = 1999 AND mo = 5 AND dy >= 02 AND dy <= 08;
 ~~~
 
 ~~~
@@ -118,7 +118,7 @@ Next, let's get a list of starting points for all of the tornadoes in the outbre
 
 {% include copy-clipboard.html %}
 ~~~ sql
-SELECT ST_AsText(geom) FROM "1950-2018-torn-initpoint" WHERE yr = 1999 AND st = 'OK' AND mo = 5 AND dy > 02 AND dy <= 08;
+SELECT ST_AsText(geom) FROM "1950-2019-torn-initpoint" WHERE yr = 1999 AND st = 'OK' AND mo = 5 AND dy > 02 AND dy <= 08;
 ~~~
 
 ~~~
